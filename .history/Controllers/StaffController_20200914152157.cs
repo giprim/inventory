@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using inventory.Context;
 using inventory.Models;
- 
+
 namespace inventory.Controllers
 {
     [Route("api/[controller]")]

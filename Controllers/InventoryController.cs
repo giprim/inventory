@@ -7,53 +7,53 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using inventory.Context;
 using inventory.Models;
- 
+
 namespace inventory.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StaffController : ControllerBase
+    public class InventoryController : ControllerBase
     {
         private readonly AssetContext _context;
 
-        public StaffController(AssetContext context)
+        public InventoryController(AssetContext context)
         {
             _context = context;
         }
 
-        // GET: api/Staff
+        // GET: api/Inventory
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Staff>>> GetStaff()
+        public async Task<ActionResult<IEnumerable<Inventory>>> GetInventories()
         {
-            return await _context.Staff.ToListAsync();
+            return await _context.Inventories.ToListAsync();
         }
 
-        // GET: api/Staff/5
+        // GET: api/Inventory/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Staff>> GetStaff(int id)
+        public async Task<ActionResult<Inventory>> GetInventory(int id)
         {
-            var staff = await _context.Staff.FindAsync(id);
+            var inventory = await _context.Inventories.FindAsync(id);
 
-            if (staff == null)
+            if (inventory == null)
             {
                 return NotFound();
             }
 
-            return staff;
+            return inventory;
         }
 
-        // PUT: api/Staff/5
+        // PUT: api/Inventory/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutStaff(int id, Staff staff)
+        public async Task<IActionResult> PutInventory(int id, Inventory inventory)
         {
-            if (id != staff.StaffId)
+            if (id != inventory.InventoryId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(staff).State = EntityState.Modified;
+            _context.Entry(inventory).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace inventory.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StaffExists(id))
+                if (!InventoryExists(id))
                 {
                     return NotFound();
                 }
@@ -74,37 +74,37 @@ namespace inventory.Controllers
             return NoContent();
         }
 
-        // POST: api/Staff
+        // POST: api/Inventory
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Staff>> PostStaff(Staff staff)
+        public async Task<ActionResult<Inventory>> PostInventory(Inventory inventory)
         {
-            _context.Staff.Add(staff);
+            _context.Inventories.Add(inventory);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetStaff", new { id = staff.StaffId }, staff);
+            return CreatedAtAction("GetInventory", new { id = inventory.InventoryId }, inventory);
         }
 
-        // DELETE: api/Staff/5
+        // DELETE: api/Inventory/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Staff>> DeleteStaff(int id)
+        public async Task<ActionResult<Inventory>> DeleteInventory(int id)
         {
-            var staff = await _context.Staff.FindAsync(id);
-            if (staff == null)
+            var inventory = await _context.Inventories.FindAsync(id);
+            if (inventory == null)
             {
                 return NotFound();
             }
 
-            _context.Staff.Remove(staff);
+            _context.Inventories.Remove(inventory);
             await _context.SaveChangesAsync();
 
-            return staff;
+            return inventory;
         }
 
-        private bool StaffExists(int id)
+        private bool InventoryExists(int id)
         {
-            return _context.Staff.Any(e => e.StaffId == id);
+            return _context.Inventories.Any(e => e.InventoryId == id);
         }
     }
 }
